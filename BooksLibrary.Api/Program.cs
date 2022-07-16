@@ -1,6 +1,8 @@
+using BooksLibrary.Application;
 using BooksLibrary.Infrastructure;
 using BooksLibrary.Persistence;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 builder.Services.AddSwaggerGen(
     c =>

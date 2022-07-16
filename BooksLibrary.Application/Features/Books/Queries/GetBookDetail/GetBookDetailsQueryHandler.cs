@@ -25,7 +25,8 @@ public class GetBookDetailsQueryHandler : IRequestHandler<GetBookDetailsQuery, B
             .FirstOrDefaultAsync(cancellationToken);
 
         var bookVm = _mapper.Map<BookDetailsVm>(book);
-
+        
+        
         return bookVm;
     }
 }

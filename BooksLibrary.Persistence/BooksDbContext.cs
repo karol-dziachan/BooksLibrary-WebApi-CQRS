@@ -45,8 +45,11 @@ public class BooksDbContext : DbContext, IBooksDbContext
                     entry.Entity.StatusId = 1;
                     break;
                 case EntityState.Modified:
+                    entry.Entity.CreatedBy = string.Empty;
+                    entry.Entity.Created = _dateTime.Now;
                     entry.Entity.ModifiedBy = String.Empty;
-                    entry.Entity.Modified =  _dateTime.Now;;
+                    entry.Entity.Modified =  _dateTime.Now;
+                    entry.Entity.StatusId = 1;
                     break;
                 case EntityState.Deleted:
                     entry.Entity.ModifiedBy = String.Empty;

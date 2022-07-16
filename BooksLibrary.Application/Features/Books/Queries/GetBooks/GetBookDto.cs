@@ -2,9 +2,9 @@
 using BooksLibrary.Application.Common.Mappings;
 using BooksLibrary.Domain.Entities;
 
-namespace BooksLibrary.Application.Features.Books.Queries.GetBookDetail;
+namespace BooksLibrary.Application.Features.Books.Queries.GetBooks;
 
-public class BookDetailsVm : IMapFrom<Book>
+public class GetBookDto  : IMapFrom<Book>
 {
     public int Id { get; set; }
     
@@ -20,7 +20,7 @@ public class BookDetailsVm : IMapFrom<Book>
 
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<Book, BookDetailsVm>()
+        profile.CreateMap<Book, GetBookDto>()
             .ForMember(i => i.GenreName, opt => opt.MapFrom(i => i.Genre.Name))
             .ForMember(i => i.AuthorName, opt => opt.MapFrom(i => i.Author.FullName.FirstName + " " + i.Author.FullName.LastName));
     }
