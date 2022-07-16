@@ -1,23 +1,23 @@
-﻿using BooksLibrary.Application.Features.Books.Commands;
-using BooksLibrary.Application.Features.Books.Commands.DeleteBook;
-using BooksLibrary.Application.Features.Books.Commands.UpdateBook;
+﻿using BooksLibrary.Application.Features.Authors.Command.CreateAuthor;
+using BooksLibrary.Application.Features.Authors.Command.DeleteAuthor;
+using BooksLibrary.Application.Features.Authors.Command.UpdateAuthor;
+using BooksLibrary.Application.Features.Authors.Queries.GetAuthors;
+using BooksLibrary.Application.Features.Authors.Queries.GetAuthourDetails;
 using BooksLibrary.Application.Features.Books.Queries.GetBookDetail;
-using BooksLibrary.Application.Features.Books.Queries.GetBooks;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksLibrary.Controllers
 {
-    [Route("api/books")]
+    [Route("api/authors")]
     [ApiController]
-    public class BooksController : BaseController
+    public class AuthorsController : BaseController
     {
         /// <summary>
-        ///   Get book by Id
+        ///   Get author by Id
         /// </summary>
-        /// <param name="id">Book identifier</param>
-        /// <returns>Book</returns>
+        /// <param name="id">Author identifier</param>
+        /// <returns>Author</returns>
         /// <response code="200">If everything is ok</response>
         /// <response code="403">If the user is not authorization</response>
         /// <response code="404">If the book not found</response>
@@ -27,7 +27,7 @@ namespace BooksLibrary.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BookDetailsVm>> GetDetails(int id)
         {
-            var vm = await Mediator.Send(new GetBookDetailsQuery() { BookId = id });
+            var vm = await Mediator.Send(new GetAuthorQuery() {Id = id});
 
             if (vm is null)
             {
@@ -38,20 +38,19 @@ namespace BooksLibrary.Controllers
         }
 
         /// <summary>
-        ///  Get books collection
+        ///   Get authors
         /// </summary>
-        /// <returns>ICollection<GetBookDto></returns>
+        /// <returns>IQueryable<GetAuthorVm></returns>
         /// <response code="200">If everything is ok</response>
         /// <response code="403">If the user is not authorization</response>
-        /// <response code="404">If the any book not found</response>
+        /// <response code="404">If any author not found</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<BookDetailsVm>> GetBooks()
+        public async Task<ActionResult<GetAuthorsVm>> GetAuthors()
         {
-            var vm = await Mediator.Send(new GetBooksQuery());
+            var vm = await Mediator.Send(new GetAuthorsQuery());
 
             if (vm is null)
             {
@@ -62,80 +61,76 @@ namespace BooksLibrary.Controllers
         }
 
         /// <summary>
-        ///  Created new book
+        ///   Create author
         /// </summary>
-        /// <param name="command">New book</param>
-        /// <returns>A newly created book id</returns>
-        /// <response code="201">If the book was created</response>
-        /// <response code="400">If the request is invalid</response>
+        /// <param name="command">Author create command</param>
+        /// <returns>Newly created author id</returns>
+        /// <response code="200">If everything is ok</response>
         /// <response code="403">If the user is not authorization</response>
-        /// <response code="409">If there  any conflict</response>
+        /// <response code="400">If the request is invalid/response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateBook(CreateBookCommand book)
+        public async Task<ActionResult> CreateAuthor(CreateAuthorCommand command)
         {
-            var vm = await Mediator.Send(book);
+            var authorId = await Mediator.Send(command);
 
-            if (vm == default)
+            if (authorId == default)
             {
-                return BadRequest(vm);
+                return BadRequest(authorId);
             }
 
-            return Ok(vm);
+            return Ok(authorId);
         }
-        
+
         /// <summary>
-        ///  Update the book
+        ///   Update author
         /// </summary>
-        /// <param name="command">Update book</param>
-        /// <returns>A updated book command id</returns>
+        /// <param name="command">Author update command and id</param>
+        /// <returns>Updated author id</returns>
         /// <response code="200">If everything is ok</response>
         /// <response code="403">If the user is not authorization</response>
-        /// <response code="404">If the book not found</response>
+        /// <response code="404">If any author was found/response>
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UpdateBook(int id, UpdateBookCommand book)
+        public async Task<ActionResult> UpdateAuthor(int id, UpdateAuthorCommand command)
         {
-            book.Id = id;
-            var updId = await Mediator.Send(book);
+            command.Id = id;
+            var authorId = await Mediator.Send(command);
 
-            if (updId != id)
+            if (authorId == default)
             {
-                return NotFound(id);
+                return NotFound(authorId);
             }
 
-            return Ok(book);
+            return Ok(authorId);
         }
 
         /// <summary>
-        ///  Delete the book
+        ///   Delete author
         /// </summary>
-        /// <param name="id">Id</param>
-        /// <returns>A deleted book id</returns>
+        /// <param name="command">Author id</param>
+        /// <returns>Deleted author id</returns>
         /// <response code="200">If everything is ok</response>
         /// <response code="403">If the user is not authorization</response>
-        /// <response code="404">If the book not found</response>
+        /// <response code="404">If any author was found/response>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteBook(int id)
+        public async Task<ActionResult> DeleteAuthor(int id)
         {
-            var updId = await Mediator.Send(new DeleteBookCommand() {Id = id});
+            var vm = await Mediator.Send(new DeleteAuthorCommand() {Id = id});
 
-            if (updId == default)
+            if (vm == default)
             {
                 return NotFound(id);
             }
 
-            return Ok(updId);
+            return Ok(vm);
         }
-
-
     }
 }

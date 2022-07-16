@@ -24,6 +24,11 @@ public class GetBooksQueryHandler : IRequestHandler<GetBooksQuery, GetBooksVm>
             .Include(b => b.Author)
             .Include(b => b.Genre);
 
+        if (!books.Any())
+        {
+            return default;
+        }
+        
         var booksVm = new GetBooksVm();        
         
         foreach (var book in books)

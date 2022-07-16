@@ -15,7 +15,9 @@ public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, int>
 
     public async Task<int> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
     {
-        var book = await _context.Books.Where(i => i.Id == request.Id).FirstOrDefaultAsync(cancellationToken);
+        var book = await _context.Books
+            .Where(i => i.Id == request.Id)
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (book is null)
         {

@@ -13,6 +13,4 @@ public class Author : AuditableEntity
     public string BirthPlace { get; set; }
     
     public ICollection<Book> Books { get; set; }
-    
-    
 }

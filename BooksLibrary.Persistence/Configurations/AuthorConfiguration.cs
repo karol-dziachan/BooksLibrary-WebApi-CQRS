@@ -8,7 +8,7 @@ public class AuthorConfiguration : IEntityTypeConfiguration<Author>
 {
     public void Configure(EntityTypeBuilder<Author> builder)
     {
-        builder.OwnsOne(p => p.FullName).Property(p => p.FirstName).HasColumnName("FirstName").IsRequired();
-        builder.OwnsOne(p => p.FullName).Property(p => p.LastName).HasColumnName("LastName").IsRequired();
+        builder.OwnsOne(p => p.FullName).Property(p => p.FirstName).HasColumnName("FirstName").HasMaxLength(300).HasMaxLength(300);
+        builder.OwnsOne(p => p.FullName).Property(p => p.LastName).HasColumnName("LastName").HasMaxLength(300).HasMaxLength(300);
     }
 }

@@ -4,6 +4,7 @@ using BooksLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BooksLibrary.Migrations
 {
     [DbContext(typeof(BooksDbContext))]
-    partial class BooksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220716110042_authorsFix2")]
+    partial class authorsFix2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +70,7 @@ namespace BooksLibrary.Migrations
                         {
                             Id = 1,
                             BirthPlace = "Poland",
-                            Created = new DateTime(2022, 7, 16, 13, 22, 24, 69, DateTimeKind.Local).AddTicks(7579),
+                            Created = new DateTime(2022, 7, 16, 13, 0, 41, 937, DateTimeKind.Local).AddTicks(5400),
                             CreatedBy = "",
                             DoB = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
@@ -77,7 +79,7 @@ namespace BooksLibrary.Migrations
                         {
                             Id = 2,
                             BirthPlace = "Poland",
-                            Created = new DateTime(2022, 7, 16, 13, 22, 24, 69, DateTimeKind.Local).AddTicks(7762),
+                            Created = new DateTime(2022, 7, 16, 13, 0, 41, 937, DateTimeKind.Local).AddTicks(5611),
                             CreatedBy = "",
                             DoB = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
@@ -86,7 +88,7 @@ namespace BooksLibrary.Migrations
                         {
                             Id = 3,
                             BirthPlace = "Poland",
-                            Created = new DateTime(2022, 7, 16, 13, 22, 24, 69, DateTimeKind.Local).AddTicks(7846),
+                            Created = new DateTime(2022, 7, 16, 13, 0, 41, 937, DateTimeKind.Local).AddTicks(5719),
                             CreatedBy = "",
                             DoB = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
@@ -95,7 +97,7 @@ namespace BooksLibrary.Migrations
                         {
                             Id = 4,
                             BirthPlace = "Poland",
-                            Created = new DateTime(2022, 7, 16, 13, 22, 24, 69, DateTimeKind.Local).AddTicks(7920),
+                            Created = new DateTime(2022, 7, 16, 13, 0, 41, 937, DateTimeKind.Local).AddTicks(5862),
                             CreatedBy = "",
                             DoB = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
@@ -104,7 +106,7 @@ namespace BooksLibrary.Migrations
                         {
                             Id = 5,
                             BirthPlace = "USA",
-                            Created = new DateTime(2022, 7, 16, 13, 22, 24, 69, DateTimeKind.Local).AddTicks(7991),
+                            Created = new DateTime(2022, 7, 16, 13, 0, 41, 937, DateTimeKind.Local).AddTicks(6018),
                             CreatedBy = "",
                             DoB = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             StatusId = 1
@@ -688,14 +690,18 @@ namespace BooksLibrary.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
                                 .HasMaxLength(300)
                                 .HasColumnType("nvarchar(300)")
-                                .HasColumnName("FirstName");
+                                .HasDefaultValue("");
 
                             b1.Property<string>("LastName")
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
                                 .HasMaxLength(300)
                                 .HasColumnType("nvarchar(300)")
-                                .HasColumnName("LastName");
+                                .HasDefaultValue("");
 
                             b1.HasKey("AuthorId");
 
