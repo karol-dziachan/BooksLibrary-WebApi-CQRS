@@ -13,4 +13,6 @@ public class CreateBookCommandValidator : AbstractValidator<CreateBookCommand>
         RuleFor(x => x).Must(a => _context.Authors.Any( b =>b.Id == a.AuthorId));
         RuleFor(x => x).Must(a => _context.Genres.Any( b =>b.Id == a.GenreId));
     }
+    
+   
 }

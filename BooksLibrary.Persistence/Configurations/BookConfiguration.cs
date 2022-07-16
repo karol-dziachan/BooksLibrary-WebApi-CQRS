@@ -12,7 +12,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
 
         builder.Property(p => p.Title).HasMaxLength(300).IsRequired();
 
-        builder.Property(p => p.IsAvailAble).HasDefaultValue(true);
+        builder.Property(p => p.IsAvailable).HasDefaultValue(true);
 
     }
 }

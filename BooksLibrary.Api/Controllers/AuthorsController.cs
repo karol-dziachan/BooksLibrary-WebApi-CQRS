@@ -14,7 +14,7 @@ namespace BooksLibrary.Controllers
     public class AuthorsController : BaseController
     {
         /// <summary>
-        ///   Get author by Id
+        /// Get author by Id
         /// </summary>
         /// <param name="id">Author identifier</param>
         /// <returns>Author</returns>
@@ -38,7 +38,7 @@ namespace BooksLibrary.Controllers
         }
 
         /// <summary>
-        ///   Get authors
+        /// Get authors
         /// </summary>
         /// <returns>IQueryable<GetAuthorVm></returns>
         /// <response code="200">If everything is ok</response>
@@ -61,13 +61,13 @@ namespace BooksLibrary.Controllers
         }
 
         /// <summary>
-        ///   Create author
+        /// Create author
         /// </summary>
         /// <param name="command">Author create command</param>
         /// <returns>Newly created author id</returns>
         /// <response code="200">If everything is ok</response>
         /// <response code="403">If the user is not authorization</response>
-        /// <response code="400">If the request is invalid/response>
+        /// <response code="400">If the request is invalid</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -85,13 +85,13 @@ namespace BooksLibrary.Controllers
         }
 
         /// <summary>
-        ///   Update author
+        /// Update author
         /// </summary>
         /// <param name="command">Author update command and id</param>
         /// <returns>Updated author id</returns>
         /// <response code="200">If everything is ok</response>
         /// <response code="403">If the user is not authorization</response>
-        /// <response code="404">If any author was found/response>
+        /// <response code="404">If any author was found</response>
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -110,13 +110,13 @@ namespace BooksLibrary.Controllers
         }
 
         /// <summary>
-        ///   Delete author
+        /// Delete author
         /// </summary>
         /// <param name="command">Author id</param>
         /// <returns>Deleted author id</returns>
         /// <response code="200">If everything is ok</response>
         /// <response code="403">If the user is not authorization</response>
-        /// <response code="404">If any author was found/response>
+        /// <response code="404">If any author was found</response>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

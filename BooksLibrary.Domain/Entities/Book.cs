@@ -6,7 +6,7 @@ public class Book : AuditableEntity
 {
     public string Title { get; set; }
     
-    public bool IsAvailAble { get; set; }
+    public bool IsAvailable { get; set; }
     
     public string PublicationCountry { get; set; }
     
