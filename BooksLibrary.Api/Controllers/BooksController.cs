@@ -66,10 +66,9 @@ namespace BooksLibrary.Controllers
         /// </summary>
         /// <param name="command">New book</param>
         /// <returns>A newly created book id</returns>
-        /// <response code="201">If the book was created</response>
-        /// <response code="400">If the request is invalid</response>
+        /// <response code="200">If the book was created</response>
+        /// <response code="403">If the request is invalid</response>
         /// <response code="403">If the user is not authorization</response>
-        /// <response code="409">If there  any conflict</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
