@@ -3,6 +3,7 @@ using BooksLibrary.Application.Features.Books.Commands.DeleteBook;
 using BooksLibrary.Application.Features.Books.Commands.UpdateBook;
 using BooksLibrary.Application.Features.Books.Queries.GetBookDetail;
 using BooksLibrary.Application.Features.Books.Queries.GetBooks;
+using BooksLibrary.Application.Features.Books.Queries.GetPageWithBooks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,31 @@ namespace BooksLibrary.Controllers
     [ApiController]
     public class BooksController : BaseController
     {
+        /// <summary>
+        ///   Get page with books
+        /// </summary>
+        /// <param name="pageNumber">Current page number</param>
+        /// <param name="pageSize">Current page size</param>
+        /// <returns>Book</returns>
+        /// <response code="200">If everything is ok</response>
+        /// <response code="403">If the user is not authorization</response>
+        /// <response code="404">If the book not found</response>
+        [HttpGet("/book-page")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<BookDetailsVm>> GetPageWithBooks(int pageNumber, int pageSize)
+        {
+            var vm = await Mediator.Send(new GetPageWithBooksQuery() { PageSize = pageSize, PageNumber = pageNumber});
+
+            if (!vm.BooksDtos.Any())
+            {
+                return NotFound(vm);
+            }
+
+            return Ok(vm);
+        }
+        
         /// <summary>
         ///   Get book by Id
         /// </summary>
